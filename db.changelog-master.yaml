@@ -1,0 +1,66 @@
+databaseChangeLog:
+- changeSet:
+    id: 1595012255439-39
+    author: myarbrou
+    changes:
+    - createTable:
+        tableName: usage_agreement_terms
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: INTEGER
+            autoIncrement: true
+            startWith: 1
+            incrementBy: 1
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: text
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: start_date
+            type: date
+        - column:
+            name: end_date
+            type: date
+- changeSet:
+    id: 1595012255439-40
+    author: myarbrou
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: usage_agreement_terms_pkey
+        tableName: usage_agreement_terms
+    - addUniqueConstraint:
+        columnNames: version
+        constraintName: usage_agreement_terms_version_unique
+        tableName: usage_agreement_terms
+- changeSet:
+    id: 1595012255439-41
+    author: myarbrou
+    changes:
+        - loadUpdateData:
+            tableName: usage_agreement_terms
+            columns:
+                - column:
+                    index: 0
+                    name: version
+                - column:
+                    index: 1
+                    name: text
+                - column:
+                    index: 2
+                    name: start_date
+            file: usage_agreement_terms.csv
+            primaryKey: version
+            quotchar: '"'
+            separator: ','
